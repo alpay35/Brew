@@ -77,12 +77,12 @@ function initSettings() {
     var nasIp = getCookie("NAS_IP") || "192.168.1.50";
     var nasPort = getCookie("NAS_PORT") || "8080";
     var ps4Ip = getCookie("PS4IP") || "127.0.0.1";
-    var pkglink = getCookie("pkglink") || ("http://" + nasIp + ":" + nasPort + "/pkgs.json");
+    var customPkglink = getCookie("CUSTOM_PKGLINK");
 
     document.getElementById("nas-ip-input").value = nasIp;
     document.getElementById("nas-port-input").value = nasPort;
     document.getElementById("PS4IP-input").value = ps4Ip;
-    document.getElementById("pkglink-input").value = pkglink;
+    document.getElementById("pkglink-input").value = customPkglink;
 }
 
 function save() {
@@ -99,6 +99,7 @@ function save() {
     if (!finalPkglink.startsWith("http://") && !finalPkglink.startsWith("https://")) {
         finalPkglink = "http://" + finalPkglink;
     }
+    setCookie("CUSTOM_PKGLINK", customPkglink ? finalPkglink : "", 365);
     setCookie("pkglink", finalPkglink, 365);
 
     alert("Ayarlar kaydedildi! Oyun listesi güncelleniyor...");

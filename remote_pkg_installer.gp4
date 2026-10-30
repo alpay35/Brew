@@ -21,7 +21,6 @@
     <file targ_path="sce_sys/icon0.png" orig_path="sce_sys/icon0.png" />
     <file targ_path="sce_sys/pic0.png" orig_path="sce_sys/pic0.png" />
     <file targ_path="eboot.bin" orig_path="eboot.bin" />
-    <file targ_path="sce_discmap.plt" orig_path="sce_discmap.plt" />
     <file targ_path="store/background.png" orig_path="store/background.png" />
     <file targ_path="store/button.png" orig_path="store/button.png" />
     <file targ_path="store/favicon.png" orig_path="store/favicon.png" />

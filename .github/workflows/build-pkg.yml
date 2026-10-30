@@ -3,22 +3,30 @@ name: Build PS4 PKG (Brew Edition)
 on:
   push:
     branches: [ "master", "main" ]
+  pull_request:
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/openorbis/openorbis-ps4-toolchain:latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install OpenOrbis PkgTool
+        run: |
+          curl -sSL -o toolchain.tar.gz https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz
+          tar xzf toolchain.tar.gz -C "$RUNNER_TEMP"
+          curl -sSL -o libssl1.1.deb http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+          dpkg-deb -x libssl1.1.deb "$RUNNER_TEMP/ssl11"
+          rm toolchain.tar.gz libssl1.1.deb
+          echo "$RUNNER_TEMP/OpenOrbis/PS4Toolchain/bin/linux" >> "$GITHUB_PATH"
+          echo "LD_LIBRARY_PATH=$RUNNER_TEMP/ssl11/usr/lib/x86_64-linux-gnu" >> "$GITHUB_ENV"
+
       - name: Build PKG
         run: |
           mkdir -p dist
-          export DOTNET_ROLL_FORWARD=Major
           PkgTool.Core sfo_new sce_sys/param.sfo
           PkgTool.Core sfo_setentry sce_sys/param.sfo APP_TYPE --type Integer --maxsize 4 --value 1
           PkgTool.Core sfo_setentry sce_sys/param.sfo APP_VER --type Utf8 --maxsize 8 --value "01.00"
@@ -34,6 +42,7 @@ jobs:
           PkgTool.Core sfo_setentry sce_sys/param.sfo VERSION --type Utf8 --maxsize 8 --value "01.00"
 
           PkgTool.Core pkg_build remote_pkg_installer.gp4 dist
+          PkgTool.Core pkg_validate dist/*.pkg
 
       - name: Upload PKG Artifact
         uses: actions/upload-artifact@v4
