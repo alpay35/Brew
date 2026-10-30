@@ -400,7 +400,8 @@ function status(titleid, type) {
 
 function install(linkstring, titleid, contentid, type) {
     var http = new XMLHttpRequest();
-    var ps4ip = getCookie("PS4IP") || "127.0.0.1";`r`n    http.open('POST', "http://" + ps4ip + ":12800/api/install", true);
+    var ps4ip = getCookie("PS4IP") || "127.0.0.1";
+    http.open('POST', "http://" + ps4ip + ":12800/api/install", true);
     http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
             var response = JSON.parse(http.responseText);
