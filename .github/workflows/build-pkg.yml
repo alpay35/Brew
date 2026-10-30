@@ -1,0 +1,42 @@
+name: Build PS4 PKG (Brew Edition)
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/openorbis/openorbis-ps4-toolchain:latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build PKG
+        run: |
+          mkdir -p dist
+          export DOTNET_ROLL_FORWARD=Major
+          PkgTool.Core sfo_new sce_sys/param.sfo
+          PkgTool.Core sfo_setentry sce_sys/param.sfo APP_TYPE --type Integer --maxsize 4 --value 1
+          PkgTool.Core sfo_setentry sce_sys/param.sfo APP_VER --type Utf8 --maxsize 8 --value "01.00"
+          PkgTool.Core sfo_setentry sce_sys/param.sfo ATTRIBUTE --type Integer --maxsize 4 --value 18
+          PkgTool.Core sfo_setentry sce_sys/param.sfo CATEGORY --type Utf8 --maxsize 4 --value "gde"
+          PkgTool.Core sfo_setentry sce_sys/param.sfo CONTENT_ID --type Utf8 --maxsize 48 --value "TX0000-BREW69420_00-BREWSTORE0000000"
+          PkgTool.Core sfo_setentry sce_sys/param.sfo DOWNLOAD_DATA_SIZE --type Integer --maxsize 4 --value 0
+          PkgTool.Core sfo_setentry sce_sys/param.sfo FORMAT --type Utf8 --maxsize 4 --value "obs"
+          PkgTool.Core sfo_setentry sce_sys/param.sfo PARENTAL_LEVEL --type Integer --maxsize 4 --value 1
+          PkgTool.Core sfo_setentry sce_sys/param.sfo SYSTEM_VER --type Integer --maxsize 4 --value 0
+          PkgTool.Core sfo_setentry sce_sys/param.sfo TITLE --type Utf8 --maxsize 128 --value "PS4 NAS Store"
+          PkgTool.Core sfo_setentry sce_sys/param.sfo TITLE_ID --type Utf8 --maxsize 12 --value "BREW69420"
+          PkgTool.Core sfo_setentry sce_sys/param.sfo VERSION --type Utf8 --maxsize 8 --value "01.00"
+
+          PkgTool.Core pkg_build remote_pkg_installer.gp4 dist
+
+      - name: Upload PKG Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PS4-NAS-Store-Brew-PKG
+          path: dist/*.pkg

@@ -400,12 +400,12 @@ function status(titleid, type) {
 
 function install(linkstring, titleid, contentid, type) {
     var http = new XMLHttpRequest();
-    http.open('POST', "http://" + getCookie("PS4IP") + ":12800/api/install", true);
+    var ps4ip = getCookie("PS4IP") || "127.0.0.1";`r`n    http.open('POST', "http://" + ps4ip + ":12800/api/install", true);
     http.onreadystatechange = function() {
         if (http.readyState == 4 && http.status == 200) {
             var response = JSON.parse(http.responseText);
             if (response.status == "success") {
-                document.getElementById("status").innerHTML = "status: currently installing";
+                document.getElementById("status").innerHTML = "Durum: İndiriliyor / Kuruluyor (Installing)...";
                 console.log(http.responseText + "installing");
                 spawn_progressbar(response.task_id, titleid, contentid, type);
             } else {
@@ -438,13 +438,13 @@ function uninstall(titleid, contentid, type) {
 }
 
 function spawn_installbutton() {
-    install_button.appendChild(document.createTextNode("install"));
+    install_button.innerHTML = ""; install_button.appendChild(document.createTextNode("Yükle (Install)"));
     document.getElementById("buttondiv").appendChild(install_button);
     document.getElementById("buttondiv").appendChild(document.createElement("br"));
 }
 
 function spawn_uninstallbutton() {
-    uninstall_button.appendChild(document.createTextNode("uninstall"));
+    uninstall_button.innerHTML = ""; uninstall_button.appendChild(document.createTextNode("Kaldır (Uninstall)"));
     document.getElementById("buttondiv").appendChild(uninstall_button);
     document.getElementById("buttondiv").appendChild(document.createElement("br"));
 }

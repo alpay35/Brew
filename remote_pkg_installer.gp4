@@ -1,13 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<psproject fmt="gp4" version="1000">
+<?xml version="1.0" encoding="utf-8"?>
+<psproject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" fmt="gp4" version="1000">
   <volume>
     <volume_type>pkg_ps4_app</volume_type>
-    <volume_id>PS4VOLUME</volume_id>
-    <volume_ts>2018-10-12 00:00:00</volume_ts>
-    <package content_id="TX0000-BREW69420_00-BREWSTORE0000000" passcode="00000000000000000000000000000000" storage_type="bd25" app_type="full" c_date="2018-10-12"/>
+    <volume_ts>2026-10-30 12:00:00</volume_ts>
+    <package content_id="TX0000-BREW69420_00-BREWSTORE0000000" passcode="00000000000000000000000000000000" storage_type="digital50" app_type="full" c_date="2026-10-30" />
     <chunk_info chunk_count="1" scenario_count="1">
       <chunks>
-        <chunk id="0" layer_no="0" label="Chunk #0"/>
+        <chunk id="0" layer_no="0" label="Chunk #0" />
       </chunks>
       <scenarios default_id="0">
         <scenario id="0" type="sp" initial_chunk_count="1" label="Scenario #0">0</scenario>
@@ -15,29 +14,33 @@
     </chunk_info>
   </volume>
   <files img_no="0">
-    <file targ_path="sce_sys/param.sfo" orig_path="build\param.sfo"/>
-    <file targ_path="sce_sys/pronunciation.xml"/>
-    <file targ_path="sce_sys/pronunciation.sig"/>
-    <file targ_path="sce_sys/icon0.png"/>
-    <file targ_path="sce_sys/pic0.png"/>
-    <file targ_path="sce_sys/pic1.png"/>
-    <file targ_path="eboot.bin" orig_path="build\remote_pkg_installer.self"/>
-    <file targ_path="store/background.png" pfs_compression="enable"/>
-    <file targ_path="store/button.png" pfs_compression="enable"/>
-    <file targ_path="store/favicon.png" pfs_compression="enable"/>
-    <file targ_path="store/help.html" pfs_compression="enable"/>
-    <file targ_path="store/index.html" pfs_compression="enable"/>
-    <file targ_path="store/main.js" pfs_compression="enable"/>
-    <file targ_path="store/mhelp.html" pfs_compression="enable"/>
-    <file targ_path="store/mindex.html" pfs_compression="enable"/>
-    <file targ_path="store/msettings.html" pfs_compression="enable"/>
-    <file targ_path="store/mstyle.css" pfs_compression="enable"/>
-    <file targ_path="store/pkgs.json" pfs_compression="enable"/>
-    <file targ_path="store/settings.html" pfs_compression="enable"/>
-    <file targ_path="store/style.css" pfs_compression="enable"/>
+    <file targ_path="sce_sys/param.sfo" orig_path="sce_sys/param.sfo" />
+    <file targ_path="sce_sys/pronunciation.xml" orig_path="sce_sys/pronunciation.xml" />
+    <file targ_path="sce_sys/pronunciation.sig" orig_path="sce_sys/pronunciation.sig" />
+    <file targ_path="sce_sys/pic1.png" orig_path="sce_sys/pic1.png" />
+    <file targ_path="sce_sys/icon0.png" orig_path="sce_sys/icon0.png" />
+    <file targ_path="sce_sys/pic0.png" orig_path="sce_sys/pic0.png" />
+    <file targ_path="eboot.bin" orig_path="eboot.bin" />
+    <file targ_path="sce_discmap.plt" orig_path="sce_discmap.plt" />
+    <file targ_path="store/background.png" orig_path="store/background.png" />
+    <file targ_path="store/button.png" orig_path="store/button.png" />
+    <file targ_path="store/favicon.png" orig_path="store/favicon.png" />
+    <file targ_path="store/help.html" orig_path="store/help.html" />
+    <file targ_path="store/index.html" orig_path="store/index.html" />
+    <file targ_path="store/main.js" orig_path="store/main.js" />
+    <file targ_path="store/mhelp.html" orig_path="store/mhelp.html" />
+    <file targ_path="store/mindex.html" orig_path="store/mindex.html" />
+    <file targ_path="store/msettings.html" orig_path="store/msettings.html" />
+    <file targ_path="store/mstyle.css" orig_path="store/mstyle.css" />
+    <file targ_path="store/pkgs.json" orig_path="store/pkgs.json" />
+    <file targ_path="store/settings.html" orig_path="store/settings.html" />
+    <file targ_path="store/style.css" orig_path="store/style.css" />
+    <file targ_path="sce_sys/about/right.sprx" orig_path="sce_sys/about/right.sprx" />
   </files>
   <rootdir>
-    <dir targ_name="sce_sys"/>
-    <dir targ_name="store"/>
+    <dir targ_name="sce_sys">
+      <dir targ_name="about" />
+    </dir>
+    <dir targ_name="store" />
   </rootdir>
 </psproject>

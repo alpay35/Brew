@@ -1,6 +1,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-16">
-<title>Brew</title>
+<title>PS4 NAS Store</title>
 <link rel="shortcut icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
@@ -12,9 +12,7 @@ function mobilecheck()
 }
 
 function checkCookie() {
-
 	var background=getCookie("background");
-
     if (background == "") 
 	{
 		document.body.style.backgroundImage = "url('background.png')";	   	   
@@ -24,61 +22,45 @@ function checkCookie() {
 		document.body.style.backgroundImage = "url("+background+")";
 	}
 	
-	if(navigator.userAgent.includes("PlayStation 4"))
-	{
-		setCookie("PS4IP", window.location.href.slice(7, -30), 365); 
-	}
-	
 	var PS4IP = getCookie("PS4IP");
-	
     if (PS4IP == "") 
 	{
-			PS4IP = prompt("Please enter the IP of your PS4:","");
-	   
-			if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(PS4IP)) 
-			{  
-				setCookie("PS4IP", PS4IP, 365);  
-			}
-			else
-			{
-				alert('the IP you entered doesnt follow the IPV4-standard');
-				checkCookie();
-			}
+		PS4IP = "127.0.0.1";
+		setCookie("PS4IP", PS4IP, 365);
     }
 	
 	pkglink = getCookie("pkglink");
-	
 	if (pkglink == "")
 	{
-		document.getElementById("searchbar").setAttribute("onkeyup", "search(\"pkgs.json\")");
-		request("pkgs.json");
+		var savedNasIp = getCookie("NAS_IP") || "192.168.1.50";
+		var savedNasPort = getCookie("NAS_PORT") || "8080";
+		pkglink = "http://" + savedNasIp + ":" + savedNasPort + "/pkgs.json";
+		setCookie("pkglink", pkglink, 365);
 	}
-	else
-	{
-		document.getElementById("searchbar").setAttribute("onkeyup", "search(\""+pkglink+"\")");
-		request(pkglink)
-	}
+	
+	document.getElementById("searchbar").setAttribute("onkeyup", "search(\""+pkglink+"\")");
+	request(pkglink);
 }
 </script>
 </head>
 <body onload="mobilecheck()">
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="index.html">PKG'S</a>
-  <a href="settings.html">Settings</a>
-  <a href="help.html">Help</a>
+  <a href="index.html">Oyunlar (Games)</a>
+  <a href="settings.html">Ayarlar (Settings)</a>
+  <a href="help.html">Yardım (Help)</a>
 </div>
 <div class="main">
 <span id="nav_button" class="nav_button" onclick="openNav()"><img src="button.png"></span>
 <center id="center">
 <div id="content" >
-<font size="12"id="headline" class="nohover">PKG'S</font></br></br>
+<font size="12" id="headline" class="nohover">PS4 NAS Store</font></br></br>
 <form class="pure-form">
-<input id="searchbar" type="text" placeholder="Search">
+<input id="searchbar" type="text" placeholder="Oyun Ara (Search Games)...">
 </form>
 </br>
 <div id="filter">
-<font size="6"id="headline" class="nohover">Filter by Categories</font></br></br>
+<font size="6" id="headline" class="nohover">Kategoriler (Categories)</font></br></br>
 </div>
 </br>
 </div>
